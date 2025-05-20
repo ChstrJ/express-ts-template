@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express from 'express';
+import express, { NextFunction } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 
