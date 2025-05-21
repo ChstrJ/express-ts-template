@@ -155,7 +155,7 @@ export function makeError<TError extends Error>(error: TError) {
     timestamp: Date.now(),
     message: error.message || 'An error occured.',
     code: statusCode,
-    stack: config.stage === 'development' ? error.stack : undefined,
+    stack: config.nodeEnv === 'development' ? error.stack : undefined,
   }
 
 }

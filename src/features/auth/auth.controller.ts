@@ -6,10 +6,10 @@ export class AuthController {
 
   constructor(private readonly authService: AuthService) { }
 
-  async login(req: Request, res: Response) {
+  async login(req: any, res: any) {
     const data = req.body;
     console.log(data);
     const result = data;
-    return res.json(result);
+    return res.json();
   }
 }
