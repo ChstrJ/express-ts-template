@@ -6,8 +6,7 @@ export class AuthService {
 
   constructor(private readonly authRepository: AuthRepository) { }
 
-  async login(data: any) {
-    console.log(data)
+  async login() {
     return this.authRepository.findEmail()
   }
 

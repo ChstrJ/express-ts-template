@@ -1,11 +1,12 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { AuthController } from './auth.controller';
 
 const router = Router();
-const authController = container.resolve.bind(AuthController);
 
-router.get('/login', authController.login)
-
+//@ts-ignore
+router.get('/login', (req: Request, res: Response) => {
+  return res.json({ message: 'test' });
+});
 
 export default router;

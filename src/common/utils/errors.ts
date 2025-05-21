@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { ZodError } from 'zod';
-import config from '../config/config';
+import config from '../../config/config';
 
 export class BadRequestException extends Error {
   statusCode: number;

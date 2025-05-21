@@ -9,6 +9,7 @@ export class AuthController {
   async login(req: Request, res: Response) {
     const data = req.body;
     console.log(data);
-    return this.authService.login(data);
+    const result = data;
+    return res.json(result);
   }
 }

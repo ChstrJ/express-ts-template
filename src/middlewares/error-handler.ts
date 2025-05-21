@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { makeError } from "../utils/errors";
-import logger from "../utils/logger";
-import config from "../config/config";
+import logger from "../common/utils/logger";
+import { makeError } from "../common/utils/errors";
 
 export default function errorHandler(
   err: Error,
