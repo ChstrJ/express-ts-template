@@ -41,6 +41,9 @@ importers:
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
+      tsyringe:
+        specifier: ^4.10.0
+        version: 4.10.0
       zod:
         specifier: ^3.25.7
         version: 3.25.7
@@ -66,9 +69,6 @@ importers:
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.15.19)(typescript@5.8.3)
-      tsyringe:
-        specifier: ^4.10.0
-        version: 4.10.0
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
