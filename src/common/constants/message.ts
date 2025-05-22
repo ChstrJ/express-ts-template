@@ -15,6 +15,7 @@ export class GeneralMessage {
   public static TIMEOUT = 'Request timed out.';
 
   public static INVALID_FIELDS = 'Some required fields are missing or invalid';
-  public static INVALID_CREDENTIALS = 'The username or password you entered is incorrect.';
+  public static INVALID_CREDENTIALS =
+    'The username or password you entered is incorrect.';
   public static ALREADY_EXISTS = 'The account already exists.';
 }

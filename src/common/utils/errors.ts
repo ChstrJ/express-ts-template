@@ -156,7 +156,5 @@ export function makeError<TError extends Error>(error: TError) {
     message: error.message || 'An error occured.',
     code: statusCode,
     stack: config.nodeEnv === 'development' ? error.stack : undefined,
-  }
-
+  };
 }
-
