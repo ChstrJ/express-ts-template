@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "es6",
+    "target": "es2018",
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
@@ -9,6 +9,8 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@utils/*": ["src/common/utils/*"],
       "@common/*": ["src/common/*"],
