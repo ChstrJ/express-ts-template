@@ -3,7 +3,6 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import authRoutes from './features/auth/auth.route';
 
 const app = express();
 
@@ -16,8 +15,6 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
   res.json({ message: 'It works!' });
 });
-
-app.use('auth', authRoutes);
 
 // Global error handler (should be after routes)
 

@@ -1,4 +1,3 @@
-import config from '@root/config/config';
 import { Request, Response } from 'express';
 
 export interface CookieOptions {
@@ -11,7 +10,7 @@ export interface CookieOptions {
 
 const defaultOptions: CookieOptions = {
   httpOnly: true,
-  secure: config.nodeEnv === 'production',
+  secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax',
   path: '/',
 };
