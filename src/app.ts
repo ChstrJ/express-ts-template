@@ -3,6 +3,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import routes from '@routes/index';
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
   res.json({ message: 'It works!' });
 });
+
+app.use('/api', routes);
 
 // Global error handler (should be after routes)
 

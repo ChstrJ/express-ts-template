@@ -18,9 +18,10 @@
       "@core/*": ["src/core/*"],
       "@lib/*": ["src/lib/*"],
       "@root/*": ["src/*"],
-       "@services/*": ["services/*"],
-      "@repositories/*": ["repositories/*"],
-      "@controllers/*": ["controllers/*"]
+      "@services/*": ["src/services/*"],
+      "@repositories/*": ["src/repositories/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@routes/*": ["src/routes/*"],
     }
   },
   "include": ["src"]

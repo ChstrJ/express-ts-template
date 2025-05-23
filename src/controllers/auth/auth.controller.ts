@@ -1,10 +1,12 @@
-import { autoInjectable } from 'tsyringe';
+import { AuthService } from "@root/services/auth/auth.service";
+import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
 export class AuthController {
-  constructor() { }
+  constructor(private readonly authService: AuthService) { }
 
   async login(req: any, res: any) {
-    return res.json(req.body);
+    const data = await this.authService.login();
+    return res.json({ data: data })
   }
 }
