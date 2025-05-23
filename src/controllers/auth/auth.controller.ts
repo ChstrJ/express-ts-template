@@ -1,6 +1,5 @@
 import { AuthService } from "@root/services/auth/auth.service";
 import { autoInjectable } from "tsyringe";
-import { Request, Response } from "express";
 
 @autoInjectable()
 export class AuthController {
@@ -11,7 +10,7 @@ export class AuthController {
 
     return res.json({
       access_token: accessToken,
-      refresh_token: refreshToken
+      refresh_token: refreshToken,
     })
   }
 }

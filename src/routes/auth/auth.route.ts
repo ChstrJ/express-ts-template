@@ -1,12 +1,12 @@
 import { AuthController } from "@root/controllers/auth/auth.controller";
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import { container } from "tsyringe";
 
 const router = Router();
 
-const controller = container.resolve(AuthController);
+const authController = container.resolve(AuthController);
 
-router.post('/login', (req: any, res: any) => controller.login(req, res));
+router.post('/login', (req: any, res: any) => authController.login(req, res));
 
 export default router;
 
