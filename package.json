@@ -7,9 +7,12 @@
     "clean": "rm -rf ./dist",
     "start": "node ./dist/server.js",
     "dev": "tsx watch src/server.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:reset": "prisma migrate reset",
     "lint": "eslint 'src/**/*.ts'",
-    "prettier:check": "prettier --check 'src/**/*.ts'",
-    "prettier:fix": "prettier --write 'src/**/*.ts'"
+    "pretty": "prettier --write 'src/**/*.ts'"
   },
   "keywords": [],
   "author": "",
