@@ -1,9 +1,8 @@
-import 'reflect-metadata';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import routes from '@routes/index';
+import apiRoutes from '@routes/api';
 
 const app = express();
 
@@ -17,7 +16,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'It works!' });
 });
 
-app.use('/api', routes);
+app.use('/api', apiRoutes);
 
 // Global error handler (should be after routes)
 
