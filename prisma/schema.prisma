@@ -15,15 +15,14 @@ datasource db {
 }
 
 model Account {
-  account_id             String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  account_first_name     String
-  account_last_name      String
-  account_email          String     @unique
-  account_password       String
-  account_type           String?    @default("admin")
-  account_status         String?    @default("active")
-  account_contact_number String?
-
+  account_id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  account_first_name     String   @db.VarChar(100)  
+  account_last_name      String   @db.VarChar(100)  
+  account_email          String   @unique @db.VarChar(100)
+  account_password       String   @db.VarChar(100) 
+  account_type           String   @db.VarChar(60)
+  account_status         String   @default("active") @db.VarChar(10)
+  account_contact_number String   @db.VarChar(60)
   account_permissions    Json?    @default("{}")
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
