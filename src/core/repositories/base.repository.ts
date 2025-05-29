@@ -1,8 +1,8 @@
 import { GeneralMessage } from "@common/constants/message";
+import { Prisma } from "@root/generated/prisma";
 import { AlreadyExistsException, NotFoundException } from "@utils/errors";
 
 export abstract class BaseRepository<T> {
-  protected prisma: PrismaClient = new PrismaClient();
   protected model: any;
 
   async findAll(): Promise<T[]> {
