@@ -12,6 +12,8 @@ COPY . .
 
 RUN pnpm npm run build
 
+RUN pnpm db:generate
+
 RUN pnpm prune --prod
 
 EXPOSE 3000
