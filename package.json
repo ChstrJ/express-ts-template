@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsup src/app.ts --out-dir dist --format esm,cjs",
     "clean": "rm -rf ./dist",
-    "start": "node ./dist/server.js",
+    "start": "node ./dist/app.js",
     "dev": "tsx watch src/server.ts",
     "db:init": "npx prisma init",
     "db:generate": "prisma generate",
