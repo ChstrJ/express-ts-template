@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { AnyZodObject } from "zod";
+import { AnyZodObject, z } from "zod";
 
 export const validateRequest = (schema: AnyZodObject) => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -7,7 +7,11 @@ export const validateRequest = (schema: AnyZodObject) => {
       schema.parse(req.body)
       next()
     } catch (err: any) {
-      res.send({ errors: err.error.errors })
+      if (err instanceof z.ZodError) {
+        res.status(400);
+        const errors = err.formErrors.fieldErrors;
+        res.send({ errors: errors })
+      }
     }
   }
 }

@@ -1,9 +1,10 @@
 import prisma from '@lib/prisma';
+import { Request, Response } from 'express';
 
-export const AuthService = {
-
-  async login(req, res) {
+export const authService = {
+  async login(req) {
+    console.log(req)
     const data = await prisma.account.findFirst();
-    return res.json({ message: data });
+    return data;
   }
 }

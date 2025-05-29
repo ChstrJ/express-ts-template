@@ -1,8 +1,9 @@
-import { Router, Request, Response } from "express";
-import { AuthService } from "./auth.service";
+import { Router } from "express";
+import { authController } from "./auth.controller";
 
 const router = Router();
 
-router.get('/login', (req: Request, res: Response) => AuthService.login(req, res));
+// @ts-ignore
+router.get('/login', authController.login);
 
 export default router;
