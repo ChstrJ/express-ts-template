@@ -98,16 +98,21 @@ export function makeError<TError extends Error>(error: TError) {
     message: error.message,
   };
 
-  let statusCode = null;
-  let errors = [];
+  console.log(error.message);
 
   /* Custom Errors */
   if (error.message.includes('Malformed JSON')) {
-    statusCode: StatusCodes.BAD_REQUEST;
+    return {
+      statusCode: StatusCodes.BAD_REQUEST,
+      error: defaultError,
+    }
   }
 
   if (error instanceof BadRequestException) {
-    statusCode: StatusCodes.BAD_REQUEST;
+    return {
+      statusCode: StatusCodes.BAD_REQUEST,
+      error: defaultError,
+    }
   }
 
   if (error instanceof UnauthorizedException) {
@@ -151,10 +156,7 @@ export function makeError<TError extends Error>(error: TError) {
   }
 
   return {
-    error: true,
-    timestamp: Date.now(),
-    message: error.message || 'An error occured.',
-    code: statusCode,
-    stack: config.nodeEnv === 'development' ? error.stack : undefined,
+    statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    error: defaultError
   };
 }

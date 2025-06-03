@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Socket.IO Chat</title>
+</head>
+<body>
+  <ul id="messages"></ul>
+  <input id="messageInput" autocomplete="off" />
+  <button onclick="sendMessage()">Send</button>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    const socket = io();
+
+    console.log(socket);
+
+
+    const msgs = localStorage.getItem('msg');
+
+    console.log(msgs);
+
+
+    socket.on('connect', () => {
+      console.log('Connected:', socket.id);
+    });
+
+
+    socket.on('chat message', (msg) => {
+      const messages = JSON.parse(localStorage.getItem('msg')) || [];
+      messages.push(msg);
+      localStorage.setItem('msg', JSON.stringify(messages))
+      const li = document.createElement('li');
+      li.textContent = msg
+      document.getElementById('messages').appendChild(li);
+    });
+
+
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const msg = input.value;
+      socket.emit('chat message', msg);
+      input.value = '';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+
+    });
+
+  </script>
+</body>
+</html>
+

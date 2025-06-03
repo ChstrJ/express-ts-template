@@ -1,5 +1,5 @@
 import { GeneralMessage } from "@common/constants/message";
-import { Prisma } from "@root/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import { AlreadyExistsException, NotFoundException } from "@utils/errors";
 
 export abstract class BaseRepository<T> {

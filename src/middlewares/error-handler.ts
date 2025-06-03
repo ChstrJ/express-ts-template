@@ -8,15 +8,16 @@ export default function errorHandler(
   res: Response,
   next: NextFunction,
 ) {
-  const { error, statusCode } = makeError(err);
+  const { statusCode, error } = makeError(err);
 
   logger.error(error);
 
   const response = {
     error: true,
     timestamp: Date.now(),
-    //message: error.message || 'An error occured.',
+    message: err.message || 'An error occured.',
     code: statusCode,
+    stack: err.stack
   };
 
   res.status(statusCode || 500).json(response);
