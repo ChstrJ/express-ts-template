@@ -7,5 +7,6 @@ const router = Router();
 
 // @ts-ignore
 router.get('/login', validateRequest(loginValidator), authController.login);
+router.get('/login', validateRequest(loginValidator), authController.register);
 
 export default router;

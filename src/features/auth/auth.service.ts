@@ -6,5 +6,9 @@ export const authService = {
     const body = req.body;
     const data = await authRepository.findByEmail(body.email)
     return data;
+  },
+
+  async register(req: Request) {
+    const body = req.body;
   }
 }

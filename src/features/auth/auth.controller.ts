@@ -5,6 +5,9 @@ export const authController = {
   async login(req: Request, res: Response) {
     const data = await authService.login(req);
     return res.json({ data: data })
+  },
+
+  async register(req: Request, res: Response) {
   }
 }
 
