@@ -7,6 +7,15 @@ import logger from './common/utils/logger';
 import config from './config/config';
 import apiRoutes from '@routes/api';
 import errorHandler from '@middlewares/error-handler';
+// import { container } from 'tsyringe'; // No longer needed for these registrations
+// import { AccountRepository } from '@features/account/account.repository';
+
+// Register AccountRepository before any controllers/services that depend on it are resolved
+// container.register(AccountRepository, { useClass: AccountRepository }); // Relying on @singleton and @injectable
+// import { AuthService } from '@features/auth/auth.service';
+
+// Register AuthService
+// container.register(AuthService, { useClass: AuthService }); // Relying on @singleton and @autoInjectable
 
 const app = express();
 const server = http.createServer(app);
