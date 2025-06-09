@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
   return res.json({ message: 'It works!' });
 });
 
-
 app.use('/api', apiRoutes);
 
 // Global middleware

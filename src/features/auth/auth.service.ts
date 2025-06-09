@@ -5,6 +5,7 @@ import { comparePassword } from '@lib/hash';
 import { BadRequestException, UnauthorizedException } from '@utils/errors';
 import { setCookie } from '@utils/cookie';
 import { signAccessToken, signRefreshToken } from '@lib/jwt';
+import { redis } from '@lib/redis';
 
 @singleton()
 @injectable()
