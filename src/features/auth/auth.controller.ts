@@ -1,39 +1,20 @@
 import { Request, Response } from 'express';
-import { AuthService, authService } from './auth.service';
-import { permissions } from '@root/config/permission';
-import { StatusCodes } from 'http-status-codes';
-import { autoInjectable } from 'tsyringe';
+import { AuthService } from './auth.service';
+import { injectable, singleton, inject } from 'tsyringe';
 
-export const authController = {
-  async login(req: Request, res: Response) {
-    const data = await authService.login(req);
-    return res.json({ data: data })
-  },
-
-  async register(req: Request, res: Response) {
-    const data = await authService.register(req)
-    return res.json({ data: data })
-  }
-}
-
-@autoInjectable()
+@singleton()
+@injectable()
 export class AuthController {
 
-  constructor(protected authService?: AuthService) { }
+  constructor(@inject(AuthService) protected authService: AuthService) { }
 
   async login(req: Request, res: Response) {
-    const data = await this.authService?.login(req);
+    const data = await this.authService.login(req);
     return res.json({ data: data })
   }
 
   async register(req: Request, res: Response) {
-    const data = await this.authService?.register(req)
+    const data = await this.authService.register(req)
     return res.json({ data: data })
-  }
-
-  async test(req, res) {
-    const data = await this.authService?.register(req)
-    console.log(data)
-    return res.json(data)
   }
 }

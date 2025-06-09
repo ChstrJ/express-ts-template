@@ -2,8 +2,9 @@ import { BaseRepository } from "@core/repositories/base.repository";
 import { hashPassword } from "@lib/hash";
 import prisma from "@lib/prisma";
 import { BadRequestException, NotFoundException } from "@utils/errors";
-import { autoInjectable, injectable } from "tsyringe";
+import { injectable, singleton } from "tsyringe";
 
+@singleton()
 @injectable()
 export class AccountRepository extends BaseRepository {
   protected model = prisma.account
