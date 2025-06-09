@@ -1,9 +1,9 @@
 import { ErrorCode } from "@common/constants/error-code";
 import { GeneralMessage } from "@common/constants/message";
 import { NextFunction, Request, Response } from "express";
-import { AnyZodObject, z } from "zod";
+import { z } from "zod";
 
-export const validateRequest = (schema: AnyZodObject) => {
+export const validateRequest = (schema: z.ZodTypeAny) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body)

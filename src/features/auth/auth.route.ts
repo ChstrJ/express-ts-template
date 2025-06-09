@@ -8,7 +8,19 @@ const router = Router();
 
 const authController = container.resolve(AuthController);
 
-router.post('/login', validateRequest(loginValidator), (req, res) => authController.login(req, res));
-router.post('/register', validateRequest(registerValidator), (req, res) => authController.register(req, res));
+router.post('/login', validateRequest(loginValidator), async (req, res, next) => {
+  try {
+    await authController.login(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+router.post('/register', validateRequest(registerValidator), async (req, res, next) => {
+  try {
+    await authController.register(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;

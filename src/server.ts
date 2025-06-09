@@ -1,4 +1,8 @@
 import "reflect-metadata";
+import { container } from "tsyringe";
+import { AccountRepository } from "@features/account/account.repository";
+import { AuthService } from "@features/auth/auth.service";
+import { AuthController } from "@features/auth/auth.controller";
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
@@ -7,6 +11,10 @@ import logger from './common/utils/logger';
 import config from './config/config';
 import apiRoutes from '@routes/api';
 import errorHandler from '@middlewares/error-handler';
+
+container.registerSingleton(AccountRepository);
+container.registerSingleton(AuthService);
+container.registerSingleton(AuthController);
 
 const app = express();
 const server = http.createServer(app);
@@ -18,7 +26,7 @@ app.use(cookieParser());
 
 // Routes
 app.get('/', (req, res) => {
-  return res.json({ message: 'It works!' });
+  res.json({ message: 'It works!' });
 });
 
 
