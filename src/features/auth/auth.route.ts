@@ -1,12 +1,14 @@
 import { Router } from "express";
-import { authController } from "./auth.controller";
 import { validateRequest } from "@middlewares/validator";
-import { loginValidator } from "@common/schema/authValidator";
+import { loginValidator, registerValidator } from "@common/schema/authValidator";
+import { container } from "tsyringe";
+import { AuthController } from "./auth.controller";
 
 const router = Router();
 
-// @ts-ignore
-router.get('/login', validateRequest(loginValidator), authController.login);
-router.get('/login', validateRequest(loginValidator), authController.register);
+const authController = container.resolve(AuthController);
+
+router.post('/login', validateRequest(loginValidator), (req, res) => authController.login(req, res));
+router.post('/register', validateRequest(registerValidator), (req, res) => authController.register(req, res));
 
 export default router;
