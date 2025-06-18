@@ -29,7 +29,6 @@ export abstract class BaseRepository {
         data: data
       });
     } catch (e) {
-      console.log(e)
       if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {
         throw new AlreadyExistsException(GeneralMessage.ALREADY_EXISTS);
       }
