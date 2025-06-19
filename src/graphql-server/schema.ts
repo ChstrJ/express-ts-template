@@ -1,13 +1,15 @@
-import { gql } from 'graphql-tag';
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
+import { usersTypeDefs } from './module/users/users.typeDefs';
+import { usersResolvers } from './module/users/users.resolver';
 
-export const typeDefs = gql`
-  type Query {
-    hello: String;
-  }
-`;
+export const typeDefs = mergeTypeDefs([
+  usersTypeDefs
+]);
 
-export const resolvers = {
-  Query: {
-    hello: () => 'Hello from Grapql'
-  }
-}
+export const resolvers = mergeResolvers([
+  usersResolvers
+]);
+
+
+
+
