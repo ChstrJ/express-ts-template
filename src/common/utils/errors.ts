@@ -1,6 +1,7 @@
+import { ErrorCode } from '@common/constants/error-code';
+import { GeneralMessage } from '@common/constants/message';
 import { StatusCodes } from 'http-status-codes';
 import { ZodError } from 'zod';
-import config from '../../config/config';
 
 export class BadRequestException extends Error {
   statusCode: number;
@@ -92,33 +93,61 @@ export class ConflictException extends Error {
   }
 }
 
+export class TooManyRequestException extends Error {
+  statusCode: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'TooManyRequestException';
+    this.message = message;
+    this.statusCode = StatusCodes.TOO_MANY_REQUESTS;
+  }
+}
+
 export function makeError<TError extends Error>(error: TError) {
   const defaultError = {
     name: error.name,
-    message: error.message,
+    message: error.message
   };
-
-  console.log(error.message);
 
   /* Custom Errors */
   if (error.message.includes('Malformed JSON')) {
     return {
       statusCode: StatusCodes.BAD_REQUEST,
       error: defaultError,
-    }
+      message: error.message
+    };
   }
 
   if (error instanceof BadRequestException) {
     return {
       statusCode: StatusCodes.BAD_REQUEST,
       error: defaultError,
-    }
+      message: error.message
+    };
+  }
+
+  if (error instanceof TooManyRequestException) {
+    return {
+      statusCode: StatusCodes.TOO_MANY_REQUESTS,
+      error: defaultError,
+      message: error.message
+    };
   }
 
   if (error instanceof UnauthorizedException) {
     return {
       statusCode: StatusCodes.UNAUTHORIZED,
       error: defaultError,
+      message: error.message
+    };
+  }
+
+  if (error instanceof AlreadyExistsException) {
+    return {
+      statusCode: StatusCodes.BAD_REQUEST,
+      error: defaultError,
+      message: error.message
     };
   }
 
@@ -126,6 +155,7 @@ export function makeError<TError extends Error>(error: TError) {
     return {
       statusCode: StatusCodes.FORBIDDEN,
       error: defaultError,
+      message: error.message
     };
   }
 
@@ -133,6 +163,7 @@ export function makeError<TError extends Error>(error: TError) {
     return {
       statusCode: StatusCodes.NOT_FOUND,
       error: defaultError,
+      message: error.message
     };
   }
 
@@ -140,6 +171,7 @@ export function makeError<TError extends Error>(error: TError) {
     return {
       statusCode: StatusCodes.CONFLICT,
       error: defaultError,
+      message: error.message
     };
   }
 
@@ -150,13 +182,15 @@ export function makeError<TError extends Error>(error: TError) {
       statusCode: StatusCodes.BAD_REQUEST,
       error: {
         ...defaultError,
-        issues: error.issues,
-      },
+        issues: error.issues
+      }
     };
   }
 
   return {
     statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-    error: defaultError
+    error: defaultError,
+    code: ErrorCode.INTERNAL_SERVER_ERROR,
+    message: GeneralMessage.SOMETHING_WENT_WRONG
   };
 }

@@ -8,10 +8,7 @@ export class IdGenerator {
     return uuidv4();
   }
 
-  static generateNanoidWithPrefix({
-    length = IdGenerator.defaultLength,
-    prefix = '',
-  }: { length?: number; prefix?: string } = {}) {
+  static generateNanoidWithPrefix({ length = IdGenerator.defaultLength, prefix = '' }: { length?: number; prefix?: string } = {}) {
     const formatNanoid = nanoid(length).replace(/[_-]/g, '');
     return prefix ? `${prefix}_${formatNanoid}` : formatNanoid;
   }

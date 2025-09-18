@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A minimal template for express typescript",
   "scripts": {
-    "build": "tsup src/app.ts --out-dir dist --format esm,cjs",
+    "build": "tsup src/server.ts --out-dir dist --format esm",
     "clean": "rm -rf ./dist",
     "start": "node ./dist/app.js",
     "dev": "tsx watch src/server.ts",
@@ -34,9 +34,7 @@
     "nanoid": "^5.1.5",
     "pino": "^9.7.0",
     "pino-pretty": "^13.0.0",
-    "reflect-metadata": "^0.2.2",
     "tsup": "^8.5.0",
-    "tsyringe": "^4.10.0",
     "uuid": "^11.1.0",
     "zod": "^3.25.7"
   },

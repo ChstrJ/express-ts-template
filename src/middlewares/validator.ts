@@ -1,25 +1,32 @@
-import { ErrorCode } from "@common/constants/error-code";
-import { GeneralMessage } from "@common/constants/message";
-import { NextFunction, Request, Response } from "express";
-import { AnyZodObject, z } from "zod";
+import { GeneralMessage } from '@common/constants/message';
+import { logger } from '@sentry/node';
+import { formatError } from '@utils/helpers';
+import { NextFunction, Request, Response } from 'express';
+import _ from 'lodash';
+import { AnyZodObject } from 'zod';
 
-export const validateRequest = (schema: AnyZodObject) => {
+export const validateRequest = (schema: AnyZodObject | any) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body)
-      next()
-    } catch (err: any) {
-      if (err instanceof z.ZodError) {
-        res.status(400);
-        const errors = err.formErrors.fieldErrors;
-        res.send({
+      const data = !_.isEmpty(req.files) ? { ...req.body, ...req.files } : req.body;
+
+      const parsedData = schema.safeParse(data);
+
+      if (!parsedData.success) {
+        const formattedErrors = formatError(parsedData);
+
+        return res.status(400).send({
           error: true,
           timestamp: Date.now(),
-          code: ErrorCode.BAD_REQUEST,
           message: GeneralMessage.BAD_REQUEST,
-          errors: errors
-        })
+          errors: formattedErrors
+        });
       }
+      req.body = parsedData.data;
+      return next();
+    } catch (err: any) {
+      logger.error('Zod Error', err);
+      return next(err);
     }
-  }
-}
+  };
+};
