@@ -5,20 +5,21 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-kysely"
+  output   = "../src/db"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("PG_HOST")
+  provider = "mysql"
+  url      = env("DB_URL")
 }
 
 model Account {
-  account_id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  account_first_name     String   @db.VarChar(100)  
-  account_last_name      String   @db.VarChar(100)  
+  account_id             String   @id @default(uuid()) @db.Char(36)
+  account_first_name     String   @db.VarChar(100)
+  account_last_name      String   @db.VarChar(100)
   account_email          String   @unique @db.VarChar(100)
-  account_password       String   @db.VarChar(100) 
+  account_password       String   @db.VarChar(100)
   account_type           String   @db.VarChar(60)
   account_status         String   @default("active") @db.VarChar(10)
   account_contact_number String   @db.VarChar(60)

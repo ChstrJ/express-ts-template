@@ -1,23 +1,26 @@
-import { Request, Response, NextFunction } from 'express';
-import logger from '../common/utils/logger';
-import { makeError } from '../common/utils/errors';
+import { NextFunction, Request, Response } from 'express';
+import { makeError } from '@utils/errors';
+import dotenv from 'dotenv';
+import logger from '@utils/logger';
+dotenv.config();
 
-export default function errorHandler(
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  const { statusCode, error } = makeError(err);
+export default function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
+  const { account_id } = req.user || {};
+  const isProduction = process.env.NODE_ENV === 'production';
+  const { statusCode, error, message } = makeError(err);
 
-  logger.error(error);
+  // if (statusCode >= 500) {
+  //   SentryCaptureStackTrace(err);
+  // }
+
+  logger.error(`account_id: ${account_id || 'unknown |'}` + err.message, { stack: err.stack });
 
   const response = {
     error: true,
     timestamp: Date.now(),
-    message: err.message || 'An error occured.',
+    message: message || 'An error occured.',
     code: statusCode,
-    stack: err.stack
+    stack: process.env.DEBUG === 'true' ? err.stack : []
   };
 
   res.status(statusCode || 500).json(response);
