@@ -1,30 +1,24 @@
 import { Request, Response } from 'express';
-import { AuthService } from './auth.service';
-import { injectable, singleton, inject } from 'tsyringe';
+import { authService } from './auth.service';
 import { setCookie } from '@utils/cookie';
 
-@singleton()
-@injectable()
-export class AuthController {
-
-  constructor(@inject(AuthService) protected authService: AuthService) { }
-
+export const authController = {
   async login(req: Request, res: Response) {
-    const data = await this.authService.login(req);
+    const data = await authService.login(req);
 
     const { accessToken, refreshToken } = data;
 
     setCookie(res, 'refresh_token', refreshToken)
     setCookie(res, 'access_token', accessToken)
 
-    return res.json({
+    res.json({
       'access_token': accessToken,
       'refresh_token': refreshToken
     })
-  }
+  },
 
   async register(req: Request, res: Response) {
-    const data = await this.authService.register(req)
-    return res.json({ data: data })
+    const data = await authService.register(req)
+    res.json({ data: data })
   }
 }

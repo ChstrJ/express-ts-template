@@ -1,20 +1,13 @@
 import { Request } from 'express';
-import { autoInjectable, inject, injectable, singleton } from 'tsyringe';
-import { AccountRepository } from '@features/account/account.repository';
+import { authRepository } from '@features/auth/auth.repository';
 import { comparePassword } from '@lib/hash';
-import { BadRequestException, UnauthorizedException } from '@utils/errors';
-import { setCookie } from '@utils/cookie';
+import { UnauthorizedException } from '@utils/errors';
 import { signAccessToken, signRefreshToken } from '@lib/jwt';
-import { redis } from '@lib/redis';
 
-@singleton()
-@injectable()
-export class AuthService {
-  constructor(@inject(AccountRepository) private accountRepository: AccountRepository) { }
-
+export const authService = {
   async login(req: Request) {
     const { email, password } = req.body;
-    const data = await this.accountRepository.findByEmail(email);
+    const data = await authRepository.findByEmail(email);
 
     const { account_password } = data;
 
@@ -26,10 +19,10 @@ export class AuthService {
     const refreshToken = signRefreshToken(data);
 
     return { accessToken, refreshToken };
-  }
+  },
 
   async register(req: Request) {
-    const data = await this.accountRepository.createAccount(req.body)
+    const data = await authRepository.createAccount(req.body)
     return data;
   }
 }
