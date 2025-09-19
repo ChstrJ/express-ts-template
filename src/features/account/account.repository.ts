@@ -1,27 +1,24 @@
-import { BaseRepository } from "@core/repositories/base.repository";
 import { hashPassword } from "@lib/hash";
-import prisma from "@lib/prisma";
 import { BadRequestException, NotFoundException } from "@utils/errors";
-import { injectable, singleton } from "tsyringe";
+import db from "src/db/db-client";
 
-@singleton()
-@injectable()
-export class AccountRepository extends BaseRepository {
-  protected model = prisma.account
-
+export const accountRepository = {
   async findByEmail(email: string) {
     if (!email) throw new BadRequestException('Email is required.');
 
-    const data = await prisma.account.findUnique({
-      where: {
-        account_email: email
-      }
-    })
+    const data = await db.selectFrom('account')
+      .select([
+        'account_id',
+        'account_email',
+        'account_role',
+        'account_status'])
+      .where('account_email', '=', email)
+      .execute();
 
     if (!data) throw new NotFoundException('User is not found.')
 
     return data;
-  }
+  },
 
   async createAccount(data: any) {
     const body = {
@@ -32,9 +29,12 @@ export class AccountRepository extends BaseRepository {
       account_type: "admin",
       account_contact_number: data.contact_number,
       account_status: "active",
-      account_permissions: {},
     }
 
-    return this.create(body)
+    try {
+      await db.insertInto('account').values(body).execute();
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
