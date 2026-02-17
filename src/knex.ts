@@ -4,7 +4,7 @@ import { config } from '@config/index';
 
 dotenv.config();
 
-export const knexConfig: Knex.Config = {
+const knexConfig: Knex.Config = {
   client: "mysql2",
   connection: {
     host: config.db.mysql.host,
@@ -22,3 +22,5 @@ export const knexConfig: Knex.Config = {
     extension: 'ts',
   },
 };
+
+export default knexConfig;

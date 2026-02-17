@@ -8,9 +8,9 @@
     "start": "node ./dist/server.js",
     "dev": "tsx watch src/server.ts",
     "lint": "eslint 'src/**/*.ts'",
-    "db:migrate": "knex --knexfile src/database/knex.ts migrate:latest",
-    "db:make-migration": "knex --knexfile src/database/knex.ts migrate:make",
-    "db:seed": "knex --knexfile src/database/knex.ts seed:run",
+    "db:migrate": "knex --knexfile knex.ts migrate:latest",
+    "db:make-migration": "knex --knexfile knex.ts migrate:make",
+    "db:seed": "knex --knexfile seed:run",
     "pretty": "prettier --write 'src/**/*.ts'"
   },
   "keywords": [],
@@ -34,7 +34,6 @@
     "http-status-codes": "^2.3.0",
     "ioredis": "^5.6.1",
     "jsonwebtoken": "^9.0.2",
-    "knex": "^3.1.0",
     "kysely": "^0.28.7",
     "lodash": "^4.17.21",
     "multer": "^2.0.2",
@@ -53,6 +52,7 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.19",
     "eslint": "^9.27.0",
+    "knex": "^3.1.0",
     "prettier": "^3.5.3",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
