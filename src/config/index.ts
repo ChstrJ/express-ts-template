@@ -8,11 +8,13 @@ export const config = {
   },
 
   db: {
-    host: env.DB_HOST,
-    port: env.DB_PORT,
-    user: env.DB_USER,
-    password: env.DB_PASSWORD,
-    name: env.DB_NAME,
+    mysql: {
+      host: env.DB_HOST,
+      port: env.DB_PORT,
+      user: env.DB_USER,
+      password: env.DB_PASSWORD,
+      database: env.DB_DATABASE,
+    }
   },
 
   redis: {

@@ -7,19 +7,16 @@
     "clean": "rm -rf ./dist",
     "start": "node ./dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "db:init": "npx prisma init",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:push": "prisma db push",
-    "db:reset": "prisma migrate reset",
     "lint": "eslint 'src/**/*.ts'",
+    "db:migrate": "knex --knexfile src/database/knex.ts migrate:latest",
+    "db:make-migration": "knex --knexfile src/database/knex.ts migrate:make",
+    "db:seed": "knex --knexfile src/database/knex.ts seed:run",
     "pretty": "prettier --write 'src/**/*.ts'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^6.16",
     "@types/compression": "^1.8.1",
     "@types/lodash": "^4.17.20",
     "@types/multer": "^2.0.0",
@@ -37,6 +34,7 @@
     "http-status-codes": "^2.3.0",
     "ioredis": "^5.6.1",
     "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
     "kysely": "^0.28.7",
     "lodash": "^4.17.21",
     "multer": "^2.0.2",
@@ -44,7 +42,6 @@
     "nanoid": "^5.1.5",
     "pino": "^9.7.0",
     "pino-pretty": "^13.0.0",
-    "prisma-kysely": "^2.2.1",
     "tsup": "^8.5.0",
     "uuid": "^11.1.0",
     "zod": "^3.25.7"
@@ -57,7 +54,6 @@
     "@types/node": "^22.15.19",
     "eslint": "^9.27.0",
     "prettier": "^3.5.3",
-    "prisma": "^6.8.2",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }
