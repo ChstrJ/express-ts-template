@@ -11,7 +11,8 @@
     "db:migrate": "knex --knexfile knex.ts migrate:latest",
     "db:make-migration": "knex --knexfile knex.ts migrate:make",
     "db:seed": "knex --knexfile seed:run",
-    "pretty": "prettier --write 'src/**/*.ts'"
+    "pretty": "prettier --write 'src/**/*.ts'",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -49,11 +50,15 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.19",
     "eslint": "^9.27.0",
+    "jest": "^30.2.0",
     "knex": "^3.1.0",
     "prettier": "^3.5.3",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }
