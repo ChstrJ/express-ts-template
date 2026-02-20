@@ -2,7 +2,7 @@ import { authService } from '../auth.service';
 import { authRepository } from '../auth.repository';
 import { comparePassword } from '@lib/hash';
 import { signAccessToken, signRefreshToken } from '@lib/jwt';
-import { UnauthorizedException } from '@utils/errors';
+import { UnauthorizedError } from '@utils/errors';
 
 // Mock dependencies
 jest.mock('../auth.repository');
@@ -32,13 +32,13 @@ describe('Auth Service', () => {
     expect(result).toEqual({ accessToken: 'mockAccessToken', refreshToken: 'mockRefreshToken' });
   });
 
-  it('should throw UnauthorizedException for invalid credentials', async () => {
+  it('should throw UnauthorizedError for invalid credentials', async () => {
     (authRepository.findByEmail as jest.Mock).mockResolvedValue({ account_password: 'hashedPassword' });
     (comparePassword as jest.Mock).mockResolvedValue(false);
 
     const req: any = { body: { email: 'test@example.com', password: 'wrongPassword' } };
 
-    await expect(authService.login(req)).rejects.toThrow(UnauthorizedException);
+    await expect(authService.login(req)).rejects.toThrow(UnauthorizedError);
     await expect(authService.login(req)).rejects.toThrow('Invalid credentials.');
   });
 });

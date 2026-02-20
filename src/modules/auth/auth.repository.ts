@@ -1,11 +1,11 @@
 
 import { hashPassword } from "@lib/hash";
-import { BadRequestException, NotFoundException } from "@utils/errors";
+import { BadRequestError, NotFoundError } from "@utils/errors";
 import db from "src/db/db-client";
 
 export const authRepository = {
   async findByEmail(email: string) {
-    if (!email) throw new BadRequestException('Email is required.');
+    if (!email) throw new BadRequestError('Email is required.');
 
     const data = await db.selectFrom('account')
       .select([
@@ -18,7 +18,7 @@ export const authRepository = {
       .where('account_email', '=', email)
       .execute();
 
-    if (!data) throw new NotFoundException('User is not found.')
+    if (!data) throw new NotFoundError('User is not found.')
 
     return data;
   },

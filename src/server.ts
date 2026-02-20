@@ -4,14 +4,14 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import logger from './common/utils/logger';
-import config from './config/config';
 import apiRoutes from '@routes/api';
-import errorHandler from '@middlewares/error-handler';
+import globalErrorHandler from '@middlewares/error-handler';
 import helmet from 'helmet';
-import { NotFoundException } from '@utils/errors';
 import dotenv from 'dotenv';
 import { limiter } from '@middlewares/rate-limiter';
 import { maintenance } from '@middlewares/maintenance';
+import { config } from './config';
+import { NotFoundError } from '@utils/errors';
 
 dotenv.config();
 
@@ -34,15 +34,15 @@ app.get('/', (req, res) => {
 app.use('/api/v1', apiRoutes);
 
 app.use(() => {
-  throw new NotFoundException('Route not found.');
+  throw new NotFoundError('Route not found.');
 });
 
-app.use(errorHandler);
+app.use(globalErrorHandler);
 
 // Start the server
 server
-  .listen(config.app.nodePort, () => {
-    logger.info(`Server running on port ${config.app.nodePort}`);
+  .listen(config.app.port, () => {
+    logger.info(`Server running on port ${config.app.port}`);
   })
   .on('error', (error) => {
     logger.error(`Error starting server: ${error.message}`);
