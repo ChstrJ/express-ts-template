@@ -7,16 +7,11 @@ This document outlines the structure, operational flow, and conventions of this 
 The project is organized into several key directories:
 
 -   **`.git/`**: Git version control metadata.
--   **`prisma/`**: Contains Prisma schema and database migration files.
-    -   `schema.prisma`: Defines the database schema and Prisma client configuration.
-    -   `migrations/`: Stores database migration files.
 -   **`src/`**: The core application source code.
     -   **`common/`**: Shared utilities, constants, and schemas.
         -   `constants/`: Application-wide constants (cache, email, error codes, etc.).
         -   `schema/`: Validation schemas (e.g., `authValidator.ts`).
         -   `utils/`: General utility functions (auth, cookie, date, errors, logger, etc.).
-    -   **`config/`**: Application configuration files.
-        -   `app.ts`, `db.ts`, `env.ts`, `jwt.ts`, `redis.ts`: Specific configurations for different services.
     -   **`db/`**: Database client and types.
         -   `db-client.ts`: Initializes and exports the database client (likely Prisma).
         -   `types.ts`: Custom database-related types.

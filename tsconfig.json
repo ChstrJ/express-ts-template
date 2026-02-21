@@ -51,9 +51,6 @@
       "@routes/*": [
         "src/routes/*"
       ],
-      "@sql/*": [
-        "./prisma/sql/*"
-      ],
       "@config/*": [
         "src/config/*"
       ],
