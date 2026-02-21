@@ -1,8 +1,7 @@
-import { GeneralMessage } from '@common/constants/message';
-import { logger } from '@sentry/node';
 import { formatError } from '@utils/helpers';
 import { NextFunction, Request, Response } from 'express';
 import _ from 'lodash';
+import { ErrorCode, errorMap } from '@common/constants/error-code';
 import { AnyZodObject } from 'zod';
 
 export const validateRequest = (schema: AnyZodObject | any) => {
@@ -16,16 +15,17 @@ export const validateRequest = (schema: AnyZodObject | any) => {
         const formattedErrors = formatError(parsedData);
 
         return res.status(400).send({
-          error: true,
-          timestamp: Date.now(),
-          message: GeneralMessage.BAD_REQUEST,
-          errors: formattedErrors
+          success: false,
+          error: {
+            message: errorMap[ErrorCode.BAD_REQUEST],
+            code: ErrorCode.BAD_REQUEST,
+            errors: formattedErrors
+          }
         });
       }
       req.body = parsedData.data;
       return next();
     } catch (err: any) {
-      logger.error('Zod Error', err);
       return next(err);
     }
   };

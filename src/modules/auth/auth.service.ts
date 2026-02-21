@@ -1,8 +1,8 @@
 import { Request } from 'express';
-import { authRepository } from '@features/auth/auth.repository';
 import { comparePassword } from '@lib/hash';
-import { UnauthorizedException } from '@utils/errors';
 import { signAccessToken, signRefreshToken } from '@lib/jwt';
+import { UnauthorizedError } from '@utils/errors';
+import { authRepository } from './auth.repository';
 
 export const authService = {
   async login(req: Request) {
@@ -12,7 +12,7 @@ export const authService = {
     const { account_password } = data;
 
     if (! await comparePassword(password, account_password)) {
-      throw new UnauthorizedException('Invalid credentials.');
+      throw new UnauthorizedError('Invalid credentials.');
     }
 
     const accessToken = signAccessToken(data);

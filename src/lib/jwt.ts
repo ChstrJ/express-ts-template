@@ -1,4 +1,4 @@
-import config from "@root/config/config";
+import { config } from '@config/index';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,5 +11,5 @@ export const signRefreshToken = (payload: object) => {
 };
 
 export const verifyToken = (token: string) => {
-  return jwt.verify(token, config.jwtSecret);
+  return jwt.verify(token, config.jwt.jwtSecret);
 };

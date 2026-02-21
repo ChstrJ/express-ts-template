@@ -1,23 +1,35 @@
-import { env } from "./env";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const config = {
   app: {
-    port: env.PORT,
-    env: env.NODE_ENV,
-    isProduction: env.NODE_ENV === 'production',
+    port: process.env.PORT ?? 3000,
+    env: process.env.NODE_ENV ?? 'development',
+    isProduction: process.env.NODE_ENV === 'production',
+    appUrl: process.env.APP_URL || 'http://localhost:3000',
+    appUrls: [process.env.APP_URL ?? '', 'http://localhost:3001', 'http://localhost:3002']
   },
 
   db: {
-    host: env.DB_HOST,
-    port: env.DB_PORT,
-    user: env.DB_USER,
-    password: env.DB_PASSWORD,
-    name: env.DB_NAME,
+    mysql: {
+      host: process.env.DATABASE_HOST,
+      port: process.env.DATABASE_PORT,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_DATABASE,
+    }
   },
 
   redis: {
-    host: env.REDIS_HOST,
-    port: env.REDIS_PORT,
-    password: env.REDIS_PASSWORD,
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASSWORD,
   },
+
+  jwt: {
+    jwtSecret: process.env.JWT_SECRET,
+    jwtExpiresIn: process.env.JWT_EXPIRES_IN,
+    jwtRefreshTokenExpiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN
+  }
 };
