@@ -15,11 +15,12 @@ export const validateRequest = (schema: AnyZodObject | any) => {
         const formattedErrors = formatError(parsedData);
 
         return res.status(400).send({
-          error: true,
-          message: errorMap[ErrorCode.BAD_REQUEST],
-          code: ErrorCode.BAD_REQUEST,
-          timestamp: Date.now(),
-          errors: formattedErrors
+          success: false,
+          error: {
+            message: errorMap[ErrorCode.BAD_REQUEST],
+            code: ErrorCode.BAD_REQUEST,
+            errors: formattedErrors
+          }
         });
       }
       req.body = parsedData.data;
