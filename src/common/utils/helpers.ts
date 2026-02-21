@@ -1,11 +1,8 @@
-import db from 'src/db/db-client';
 import _ from 'lodash';
-import { IdGenerator } from './id-generator';
 import dotenv from 'dotenv';
 import { v5 as uuidv5 } from 'uuid';
 import { Request } from 'express';
 import dayjs from 'dayjs';
-import { NotFoundError } from './errors';
 
 dotenv.config();
 const DNS_NAMESPACE = uuidv5.DNS;
@@ -69,4 +66,27 @@ export function replaceTemplateVars(template: string, data: any) {
   return template.replace(/{{\s*(\w+)\s*}}/g, (match, key) => {
     return key in data ? data[key] : match;
   });
+}
+
+export interface JsonSuccessResponse<T, M = undefined> {
+  success: true
+  data: T
+  meta?: M
+}
+
+export function jsonResponse<T, M = undefined>(
+  res: Response | any,
+  data: T,
+  options: {
+    statusCode?: number
+    meta?: M
+  } = {}
+) {
+  const response: JsonSuccessResponse<T, M> = {
+    success: true,
+    data,
+    ...(options.meta !== undefined && { meta: options.meta }),
+  }
+
+  return res.status(options.statusCode ?? 200).json(response)
 }
