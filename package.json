@@ -12,6 +12,8 @@
     "db:rollback": "npx knex migrate:rollback",
     "db:make": "npx knex migrate:make",
     "db:seed": "npx knex seed:run",
+    "db:types": "kysely-codegen --dialect mysql --out-file src/db/types.ts",
+    "db:refresh": "pnpm db:migrate && pnpm db:types",
     "pretty": "prettier --write 'src/**/*.ts'",
     "test": "jest"
   },

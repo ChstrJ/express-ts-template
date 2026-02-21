@@ -29,8 +29,7 @@ export const authRepository = {
       account_password: await hashPassword(data.password),
       account_first_name: data.first_name,
       account_last_name: data.last_name,
-      account_type: "admin",
-      account_contact_number: data.contact_number,
+      account_role: "admin",
       account_status: "active",
     }
 
