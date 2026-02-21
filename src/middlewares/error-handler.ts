@@ -2,29 +2,30 @@ import { NextFunction, Request, Response } from 'express';
 import { makeError } from '@utils/errors';
 import dotenv from 'dotenv';
 import logger from '@utils/logger';
+import { SentryCaptureStackTrace } from '@lib/sentry';
 dotenv.config();
 
-export default function globalErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
+export default function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
   const { account_id } = req.user || {};
   const isProduction = process.env.NODE_ENV === 'production';
-  const { statusCode, message, code } = makeError(err);
+  const { statusCode, error, message } = makeError(err);
 
-  logger.error({
-    environment: process.env.NODE_ENV,
-    account_id: account_id || 'unknown',
-    code: code,
-    message: err.message,
-    stack: err.stack,
-  })
+  if (statusCode >= 500) {
+    SentryCaptureStackTrace(err);
+  }
+
+  if (isProduction) {
+    logger.error(`account_id: ${account_id || 'unknown |'}` + err.message, { stack: err.stack });
+  } else {
+    logger.error(error);
+  }
 
   const response = {
-    success: false,
-    error: {
-      message: message || 'An error occurred.',
-      status: statusCode,
-      code: code,
-      stack: !isProduction ? err.stack : undefined
-    }
+    error: true,
+    timestamp: Date.now(),
+    message: message || 'An error occured.',
+    code: statusCode,
+    stack: process.env.DEBUG === 'true' ? err.stack : []
   };
 
   res.status(statusCode || 500).json(response);

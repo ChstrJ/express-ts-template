@@ -1,164 +1,116 @@
+import { ErrorCode } from '@common/constants/error-code';
+import { GeneralMessage } from '@common/constants/message';
 import { StatusCodes } from 'http-status-codes';
-import { ErrorCode, errors } from '@common/constants/error-code';
 import { ZodError } from 'zod';
 
-export class GeneralError extends Error {
-  public readonly statusCode: number;
-  public readonly code: string;
+export class BadRequestException extends Error {
+  statusCode: number;
 
-  constructor(code: string, statusCode: number, message?: string) {
-    const errorDef = errors(code);
-    super(message ?? errorDef.message);
-    this.name = this.constructor.name;
-    this.code = code;
-    this.statusCode = statusCode;
-
-    Object.setPrototypeOf(this, GeneralError.prototype);
+  constructor(message: string) {
+    super(message);
+    this.name = 'BadRequestException';
+    this.message = message;
+    this.statusCode = StatusCodes.BAD_REQUEST;
   }
 }
 
-export class BadRequestError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.BAD_REQUEST, StatusCodes.BAD_REQUEST, message);
+export class AlreadyExistsException extends Error {
+  statusCode: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'AlreadyExistsException';
+    this.message = message;
+    this.statusCode = StatusCodes.BAD_REQUEST;
   }
 }
 
-export class UnauthorizedError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.UNAUTHORIZED, StatusCodes.UNAUTHORIZED, message);
+export class ValidationException extends Error {
+  statusCode: number;
+  errors: any;
+
+  constructor(message: string, errors: any) {
+    super(message);
+    this.name = 'ValidationException';
+    this.message = message;
+    this.statusCode = StatusCodes.BAD_REQUEST;
+    this.errors = errors;
   }
 }
 
-export class ForbiddenError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.FORBIDDEN, StatusCodes.FORBIDDEN, message);
+export class UnauthorizedException extends Error {
+  statusCode: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'UnauthorizedException';
+    this.message = message;
+    this.statusCode = StatusCodes.UNAUTHORIZED;
   }
 }
 
-export class NotFoundError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.NOT_FOUND, StatusCodes.NOT_FOUND, message);
+export class ForbiddenException extends Error {
+  statusCode: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'ForbiddenException';
+    this.message = message;
+    this.statusCode = StatusCodes.FORBIDDEN;
   }
 }
 
-export class MethodNotAllowedError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.METHOD_NOT_ALLOWED, StatusCodes.METHOD_NOT_ALLOWED, message);
+export class TokenException extends Error {
+  statusCode: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'TokenException';
+    this.message = message;
+    this.statusCode = StatusCodes.FORBIDDEN;
   }
 }
 
-export class ConflictError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.CONFLICT, StatusCodes.CONFLICT, message);
+export class NotFoundException extends Error {
+  statusCode: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'NotFoundException';
+    this.message = message;
+    this.statusCode = StatusCodes.NOT_FOUND;
   }
 }
 
-export class GoneError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.GONE, StatusCodes.GONE, message);
+export class ConflictException extends Error {
+  statusCode: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'ConflictException';
+    this.message = message;
+    this.statusCode = StatusCodes.CONFLICT;
   }
 }
 
-export class PayloadTooLargeError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.PAYLOAD_TOO_LARGE, StatusCodes.REQUEST_TOO_LONG, message);
+export class TooManyRequestException extends Error {
+  statusCode: number;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'TooManyRequestException';
+    this.message = message;
+    this.statusCode = StatusCodes.TOO_MANY_REQUESTS;
   }
 }
 
-export class UnprocessableEntityError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.UNPROCESSABLE_ENTITY, StatusCodes.UNPROCESSABLE_ENTITY, message);
-  }
-}
-
-export class TooManyRequestsError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.TOO_MANY_REQUESTS, StatusCodes.TOO_MANY_REQUESTS, message);
-  }
-}
-
-export class InternalServerError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.INTERNAL_SERVER_ERROR, StatusCodes.INTERNAL_SERVER_ERROR, message);
-  }
-}
-
-export class NotImplementedError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.NOT_IMPLEMENTED, StatusCodes.NOT_IMPLEMENTED, message);
-  }
-}
-
-export class BadGatewayError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.BAD_GATEWAY, StatusCodes.BAD_GATEWAY, message);
-  }
-}
-
-export class ServiceUnavailableError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.SERVICE_UNAVAILABLE, StatusCodes.SERVICE_UNAVAILABLE, message);
-  }
-}
-
-export class GatewayTimeoutError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.GATEWAY_TIMEOUT, StatusCodes.GATEWAY_TIMEOUT, message);
-  }
-}
-
-export class ValidationError extends GeneralError {
-  public readonly errors: any;
-
-  constructor(message?: string, validationErrors?: any) {
-    super(ErrorCode.VALIDATION_ERROR, StatusCodes.BAD_REQUEST, message);
-    this.errors = validationErrors;
-  }
-}
-
-export class DuplicateEntryError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.DUPLICATE_ENTRY, StatusCodes.CONFLICT, message);
-  }
-}
-
-export class ExpiredTokenError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.EXPIRED_TOKEN, StatusCodes.UNAUTHORIZED, message);
-  }
-}
-
-export class InvalidTokenError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.INVALID_TOKEN, StatusCodes.UNAUTHORIZED, message);
-  }
-}
-
-export class InsufficientPermissionsError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.INSUFFICIENT_PERMISSIONS, StatusCodes.FORBIDDEN, message);
-  }
-}
-
-export class ResourceLockedError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.RESOURCE_LOCKED, StatusCodes.LOCKED, message);
-  }
-}
-
-export class DependencyFailureError extends GeneralError {
-  constructor(message?: string) {
-    super(ErrorCode.DEPENDENCY_FAILURE, StatusCodes.FAILED_DEPENDENCY, message);
-  }
-}
-
-export function makeError(error: Error) {
+export function makeError<TError extends Error>(error: TError) {
   const defaultError = {
     name: error.name,
     message: error.message
   };
 
-  /* Malformed JSON */
+  /* Custom Errors */
   if (error.message.includes('Malformed JSON')) {
     return {
       statusCode: StatusCodes.BAD_REQUEST,
@@ -167,20 +119,58 @@ export function makeError(error: Error) {
     };
   }
 
-  if (error instanceof ValidationError) {
+  if (error instanceof BadRequestException) {
     return {
-      statusCode: error.statusCode,
-      code: error.code,
-      message: error.message,
-      errors: error.errors
+      statusCode: StatusCodes.BAD_REQUEST,
+      error: defaultError,
+      message: error.message
     };
   }
 
-  /* GeneralError */
-  if (error instanceof GeneralError) {
+  if (error instanceof TooManyRequestException) {
     return {
-      statusCode: error.statusCode,
-      code: error.code,
+      statusCode: StatusCodes.TOO_MANY_REQUESTS,
+      error: defaultError,
+      message: error.message
+    };
+  }
+
+  if (error instanceof UnauthorizedException) {
+    return {
+      statusCode: StatusCodes.UNAUTHORIZED,
+      error: defaultError,
+      message: error.message
+    };
+  }
+
+  if (error instanceof AlreadyExistsException) {
+    return {
+      statusCode: StatusCodes.BAD_REQUEST,
+      error: defaultError,
+      message: error.message
+    };
+  }
+
+  if (error instanceof ForbiddenException) {
+    return {
+      statusCode: StatusCodes.FORBIDDEN,
+      error: defaultError,
+      message: error.message
+    };
+  }
+
+  if (error instanceof NotFoundException) {
+    return {
+      statusCode: StatusCodes.NOT_FOUND,
+      error: defaultError,
+      message: error.message
+    };
+  }
+
+  if (error instanceof ConflictException) {
+    return {
+      statusCode: StatusCodes.CONFLICT,
+      error: defaultError,
       message: error.message
     };
   }
@@ -197,12 +187,10 @@ export function makeError(error: Error) {
     };
   }
 
-  /* Unhandled Errors */
-  const unhandledError = errors(ErrorCode.INTERNAL_SERVER_ERROR);
   return {
     statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     error: defaultError,
     code: ErrorCode.INTERNAL_SERVER_ERROR,
-    message: unhandledError.message
+    message: GeneralMessage.SOMETHING_WENT_WRONG
   };
 }

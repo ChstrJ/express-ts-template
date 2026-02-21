@@ -20,7 +20,6 @@ export const defaultOptions: CookieOptions = {
 };
 
 export const setCookie = (res: Response, name: string, value: string, options: CookieOptions = {}): void => {
-  console.log('Cookie being set:', { ...defaultOptions, ...options });
   res.cookie(name, value, { ...defaultOptions, ...options });
 };
 

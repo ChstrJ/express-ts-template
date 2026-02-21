@@ -2,25 +2,30 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import './scheduler.ts';
 import compression from 'compression';
 import logger from './common/utils/logger';
+import config from './config/config';
 import apiRoutes from '@routes/api';
-import globalErrorHandler from '@middlewares/error-handler';
+import errorHandler from '@middlewares/error-handler';
 import helmet from 'helmet';
+import { NotFoundException } from '@utils/errors';
 import dotenv from 'dotenv';
+import { initSentry } from '@lib/sentry';
 import { limiter } from '@middlewares/rate-limiter';
 import { maintenance } from '@middlewares/maintenance';
-import { config } from './config';
-import { NotFoundError } from '@utils/errors';
 
 dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
 
-// Global middleware
+initSentry();
+
+// Middleware
 app.use(limiter);
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cors({ origin: config.app.appUrls, credentials: true }));
 app.use(helmet());
 app.use(cookieParser());
@@ -34,15 +39,16 @@ app.get('/', (req, res) => {
 app.use('/api/v1', apiRoutes);
 
 app.use(() => {
-  throw new NotFoundError('Route not found.');
+  throw new NotFoundException('Route not found.');
 });
 
-app.use(globalErrorHandler);
+// Global middleware
+app.use(errorHandler);
 
 // Start the server
 server
-  .listen(config.app.port, () => {
-    logger.info(`Server running on port ${config.app.port}`);
+  .listen(config.app.nodePort, () => {
+    logger.info(`Server running on port ${config.app.nodePort}`);
   })
   .on('error', (error) => {
     logger.error(`Error starting server: ${error.message}`);

@@ -5,6 +5,8 @@ export class Status {
   public static PENDING = 'pending';
   public static PROCESSING = 'processing';
   public static SENT = 'sent';
+  public static VERIFYING = 'verifying';
+  public static PREPARING = 'preparing';
   public static APPROVED = 'approved';
   public static REJECTED = 'rejected';
   public static DECLINED = 'declined';
@@ -28,6 +30,7 @@ export class Status {
   public static RELEASED = 'released';
   public static VOID = 'void';
   public static UNRELEASED = 'unreleased';
+  public static ON_HOLD = 'on_hold';
 
   public static VALID_STATUSES = [Status.ACTIVE, Status.INACTIVE, Status.PENDING];
 }

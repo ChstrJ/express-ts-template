@@ -1,6 +1,7 @@
 import { Resource } from '@common/constants/resource';
 import { sql } from 'kysely';
 import _ from 'lodash';
+import db from 'src/db/db-client';
 
 export type QueryParams = {
   limit?: string;
@@ -27,7 +28,7 @@ export function pagination(q: QueryParams) {
 
   let page = q.page !== undefined && !_.isEmpty(q.page) ? +q.page - 1 : defaultPage - 1;
 
-  let orderBy = q.order_by !== undefined && !_.isEmpty(q.order_by) ? q.order_by.toLowerCase() : defaultOrderBy;
+  const orderBy = q.order_by !== undefined && !_.isEmpty(q.order_by) ? q.order_by.toLowerCase() : defaultOrderBy;
 
   let order = q.order !== undefined && !_.isEmpty(q.order) ? q.order.toLowerCase() : defaultOrder;
 
@@ -54,12 +55,15 @@ export function generateMeta(q: QueryParams, total: number) {
   const { page, perPage } = pagination(q);
 
   const total_pages = Math.ceil(total / perPage);
+  const currentPage = page + 1;
 
   return {
     per_page: perPage,
-    page: page + 1,
+    page: currentPage,
     total_rows: total,
-    total_pages: total_pages
+    total_pages: total_pages,
+    has_next_page: currentPage < total_pages,
+    has_previous_page: currentPage > 1,
     //order_by: orderBy,
     //order: order,
   };
@@ -91,9 +95,10 @@ export function applyPagination(qb: any, q: QueryParams) {
   return qb;
 }
 
+
 export async function getTotalRecords(query: any) {
   const result = await query
-    .clearSelect() // removes all selected columns
+    .clearSelect()
     .clearOrderBy() // removes ORDER BY if present
     .select((eb: any) => eb.fn.countAll().as('count'))
     .executeTakeFirst();
@@ -106,6 +111,27 @@ export async function getTotalRecordsGroup(query: any) {
     .clearSelect()
     .clearOrderBy()
     .select(sql<number>`COUNT(DISTINCT a.account_id)`.as('count'))
+    .executeTakeFirst();
+
+  return result?.count ? Number(result.count) : 0;
+}
+
+export async function getTotalRecordsSub(query: any) {
+  const subquery = query.as('sub');
+
+  const result = await db
+    .selectFrom(subquery)
+    .select(sql`COUNT(*)`.as('count'))
+    .executeTakeFirst();
+
+  return result?.count ? Number(result.count) : 0;
+}
+
+export async function getTotalRecordsDistinct(query: any, column: string) {
+  const result = await query
+    .clearSelect()
+    .clearOrderBy()
+    .select(({ fn, ref }) => fn.count(ref(column)).distinct().as('count'))
     .executeTakeFirst();
 
   return result?.count ? Number(result.count) : 0;

@@ -1,0 +1,68 @@
+{
+  "sales": {
+    "access": 1
+  },
+  "orders": {
+    "access": 1
+  },
+  "store": {
+    "access": 1
+  },
+  "products": {
+    "access": 1
+  },
+  "packages": {
+    "access": 1
+  },
+  "levels": {
+    "access": 1
+  },
+  "recruitment": {
+    "access": 1
+  },
+  "leaderboard": {
+    "access": 1
+  },
+  "genealogy": {
+    "access": 1
+  },
+  "admin_panel": {
+    "access": 1
+  },
+  "mlm_calculator": {
+    "access": 1
+  },
+  "user_management": {
+    "access": 1
+  },
+  "wallet": {
+    "access": 1
+  },
+  "settings": {
+    "access": 1
+  },
+  "pending_user": {
+    "access": 1
+  },
+  "chat": {
+    "access": 1
+  },
+  "reports": {
+    "access": 1
+  },
+  "chat_support": {
+    "access": 1
+  },
+  "rankings": {
+    "access": 1
+  },
+  "all_teams": {
+    "access": 1
+  },
+  "delete_data": {
+    "access": 1
+  },
+  "activity_log": {
+    "access": 1
+  }
+}

@@ -13,14 +13,30 @@ export class EmailType {
     static ORDER_STATUS_UPDATE_EMAIL = 'order_status_update_email';
     static USED_REFERRAL_EMAIL = 'used_referral_email';
     static ACTIVATED_ACCOUNT_EMAIL = 'activated_account_email';
+    static ORDER_READY_FOR_PICKUP_EMAIL = 'order_ready_for_pickup_email';
+    static ORDER_PICKUP_CONFIRMED_EMAIL = 'order_pickup_confirmed_email';
+    static ORDER_PAYMENT_EMAIL = 'order_payment_email';
+    static ORDER_PLACED_EMAIL = 'order_placed_email';
+    static ORDER_REJECTED_EMAIL = 'order_rejected_email';
+    static REPLY_TO_NEW_APPLICANTS_EMAIL = 'reply_to_new_applicants_email';
+    static UNRELEASED_COMMISSION_EMAIL = 'unreleased_commission_email';
+    static ON_HOLD_COMMISSION_EMAIL = 'on_hold_commission_email';
 
     static ALL_TYPES = [
         this.WELCOME_EMAIL,
-        this.PENDING_EMAIL,
+        //this.PENDING_EMAIL,
         this.REJECTED_EMAIL,
-        this.THANK_YOU_EMAIL,
-        this.ORDER_STATUS_UPDATE_EMAIL,
+        this.ON_HOLD_COMMISSION_EMAIL,
+        this.REPLY_TO_NEW_APPLICANTS_EMAIL,
         this.USED_REFERRAL_EMAIL,
+        this.ORDER_PAYMENT_EMAIL,
+        this.ORDER_PLACED_EMAIL,
+        this.ORDER_READY_FOR_PICKUP_EMAIL,
+        this.ORDER_PICKUP_CONFIRMED_EMAIL,
+        this.ORDER_REJECTED_EMAIL,
+        //this.THANK_YOU_EMAIL,
+        //this.ORDER_STATUS_UPDATE_EMAIL,
+        //this.ORDER_READY_FOR_PICKUP_EMAIL,
         // this.ACTIVATED_ACCOUNT
     ]
 }

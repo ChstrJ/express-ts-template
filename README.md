@@ -1,169 +1,148 @@
-# 🚀 Express.js + TypeScript API Template
+# MLM Backend Service
 
-A scalable, modular, and production-ready Express.js + TypeScript backend template.
+A backend service for a multi-level marketing application, built with Node.js, Express, and TypeScript.
 
-This repository provides a clean architecture foundation with Prisma ORM, Redis integration, background job processing, and strict TypeScript standards.
+## Table of Contents
 
-Built with:
+- [About The Project](#about-the-project)
+- [Key Features](#key-features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Environment Configuration](#environment-configuration)
+  - [Database Setup](#database-setup)
+- [Available Scripts](#available-scripts)
+- [Project Structure](#project-structure)
+- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
-- Express.js
-- TypeScript (strict mode)
-- Kysely (type-safe SQL query builder)
-- Knex (migration tool)
-- Redis (caching & queues)
-- pnpm
-- ESLint + Prettier
+## About The Project
 
----
+This project provides the backend infrastructure for a Multi-Level Marketing (MLM) platform. It includes services for managing user accounts, processing commissions, handling wallets, and much more. It is designed to be scalable and maintainable, using a modern technology stack.
 
-# 📦 Tech Stack
+## Key Features
 
-| Tool | Purpose |
-|------|---------|
-| Express | HTTP server |
-| TypeScript | Type safety |
-| Kysely | Type-safe SQL query builder |
-| Knex | Database migrations |
-| Redis | Cache & job queues |
-| pnpm | Package manager |
+- **User Management**: Secure user registration, authentication, and profile management.
+- **Referral System**: Track and manage user referrals and network hierarchy.
+- **Commission Processing**: Calculate and disburse commissions based on sales and network performance.
+- **E-wallet**: Manage user wallets, including deposits, withdrawals, and transfers.
+- **Product and Order Management**: Handle product catalogs, sales, and order processing.
+- **Real-time Chat**: Integrated chat functionality for user communication.
+- **Admin Dashboard**: A comprehensive admin interface for managing the platform.
+- **Background Jobs**: Utilizes queues and workers for handling long-running tasks like sending emails and processing bonuses.
 
+## Technologies Used
 
-# 🏗 Repository Structure
+- **Backend**: Node.js, Express.js, TypeScript
+- **Database**: MySQL with Prisma ORM
+- **Authentication**: JSON Web Tokens (JWT)
+- **Caching**: Redis, Node Cache
+- **Real-time Communication**: Ably
+- **File Storage**: AWS S3 (or compatible like Cloudflare R2)
+- **Queues**: BullMQ for background job processing
+- **Email**: Resend
+- **SMS**: Custom SMS integration
+- **Deployment**: Docker, PM2
+- **Linting & Formatting**: ESLint, Prettier
+
+## Getting Started
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+- Node.js (v18 or later)
+- pnpm (or npm/yarn)
+- Docker and Docker Compose
+
+### Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/mlm-backend.git
+   cd mlm-backend
+   ```
+
+2. **Install dependencies:**
+   ```sh
+   pnpm install
+   ```
+
+### Environment Configuration
+
+1. **Create a `.env` file** by copying the example file:
+   ```sh
+   cp .env.example .env
+   ```
+
+2. **Update the `.env` file** with your configuration for the database, Redis, JWT secret, and other services.
+
+### Database Setup
+
+1. **Start the database and Redis containers:**
+   ```sh
+   docker-compose up -d
+   ```
+
+2. **Run the database migrations:**
+   ```sh
+   pnpm db:migrate
+   ```
+
+3. **Seed the database with initial data (optional):**
+   ```sh
+   pnpm db:seed-admin
+   pnpm db:seed-packages
+   # ... and other seed scripts
+   ```
+
+## Available Scripts
+
+- `pnpm dev`: Start the development server with hot-reloading.
+- `pnpm build`: Build the project for production.
+- `pnpm start`: Start the production server.
+- `pnpm worker:start`: Start the background workers using PM2.
+- `pnpm db:migrate`: Apply database migrations.
+- `pnpm lint`: Lint the codebase.
+- `pnpm format`: Format the codebase.
+
+## Project Structure
+
+The project follows a feature-based structure:
 
 ```
 src/
-├── common/
-│   ├── constants/      # Application constants
-│   ├── schema/         # Validation schemas
-│   └── utils/          # Utility functions
-│
-├── config/             # Configuration files
-├── db/                 # Database client & types
-├── jobs/               # Background job definitions
-├── lib/                # Library wrappers
-├── middlewares/        # Express middleware
-├── modules/            # Feature modules
-│   ├── auth/
-│   ├── account/
-│   └── ...
-├── queues/             # Queue definitions
-├── routes/             # API routes
-├── server.ts           # Application entry point
-└── workers/            # Worker processes
+├── cli/          # Command-line interface scripts
+├── common/       # Shared constants, schemas, and utilities
+├── config/       # Application configuration
+├── core/         # Core classes and repositories
+├── db/           # Database client and generated types
+├── features/     # Main application features (modules)
+├── jobs/         # Job definitions for background tasks
+├── lib/          # External library initializations
+├── middlewares/  # Express middlewares
+├── queues/       # Queue definitions
+├── routes/       # API routes
+├── workers/      # Background workers
+└── server.ts     # Main application entry point
 ```
 
----
+## API Documentation
 
-# 🧠 Architecture Overview
+API documentation can be generated or is available at a separate URL (e.g., using Postman or Swagger).
 
-This template follows a **modular + layered architecture**.
+## Contributing
 
-```
-module/
-├── module.controller.ts
-├── module.service.ts
-├── module.repository.ts
-└── module.route.ts
-```
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-## Layered Pattern
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Each feature module follows this structure:
+## License
 
-
-### Responsibilities
-
-| Layer        | Responsibility |
-|--------------|---------------|
-| Controller   | Handles HTTP request/response |
-| Service      | Business logic |
-| Repository   | Database interaction |
-| Route        | Express route definitions |
-
----
-
-# 🔄 Request Lifecycle
-
-1. Request enters `server.ts`
-2. Global middleware executes (auth, rate limiter, validator, etc.)
-3. Routed via `routes/api.ts`
-4. Controller receives request
-5. Service processes business logic
-6. Repository communicates with database
-7. Response returns through middleware chain
-
----
-
-# 🗄 Database Layer
-
-- Prisma ORM
-- Schema defined in: `prisma/schema.prisma`
-- Client initialized in: `src/db/db-client.ts`
-- Custom DB types in: `src/db/types.ts`
-
-All database access must go through repository files.
-
----
-
-# ⚙ Background Processing
-
-Redis-backed job system:
-
-- `src/queues/` – Queue definitions
-- `src/jobs/` – Job logic
-- `src/workers/` – Worker processors
-- `src/lib/redis.ts` – Redis client wrapper
-
-Designed for:
-- Email sending
-- Notifications
-- Heavy async tasks
-- Scheduled jobs
-
----
-
-# 🧩 Middleware
-
-Located in `src/middlewares/`
-
-Includes:
-
-- Authentication
-- Rate Limiter
-- Request Validator
-- Centralized Error Handler
-
----
-
-# 🧾 Conventions
-
-## Naming
-
-| Type | Convention |
-|------|------------|
-| Files | kebab-case |
-| Folders | kebab-case |
-| Classes | PascalCase |
-| Functions | camelCase |
-| Constants | UPPER_SNAKE_CASE |
-
----
-
-## Code Quality
-
-- Strict TypeScript
-- ESLint enforced
-- Prettier formatting
-- Consistent modular structure
-
----
-
-# 🔐 Environment Variables
-
-Environment variables are required for:
-
-- Database connection
-- Redis connection
-- JWT secrets
-- API configuration
-
+Distributed under the ISC License. See `LICENSE` for more information.

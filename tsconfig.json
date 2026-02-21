@@ -15,48 +15,20 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "paths": {
-      "@utils/*": [
-        "src/common/utils/*"
-      ],
-      "@common/*": [
-        "src/common/*"
-      ],
-      "@middlewares/*": [
-        "src/middlewares/*"
-      ],
-      "@features/*": [
-        "src/features/*"
-      ],
-      "@modules/*": [
-        "src/modules/*"
-      ],
-      "@core/*": [
-        "src/core/*"
-      ],
-      "@lib/*": [
-        "src/lib/*"
-      ],
-      "@root/*": [
-        "."
-      ],
-      "@services/*": [
-        "src/services/*"
-      ],
-      "@repositories/*": [
-        "src/repositories/*"
-      ],
-      "@controllers/*": [
-        "src/controllers/*"
-      ],
-      "@routes/*": [
-        "src/routes/*"
-      ],
-      "@config/*": [
-        "src/config/*"
-      ],
+      "@utils/*": ["src/common/utils/*"],
+      "@common/*": ["src/common/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@features/*": ["src/features/*"],
+      "@core/*": ["src/core/*"],
+      "@lib/*": ["src/lib/*"],
+      "@root/*": ["."],
+      "@services/*": ["src/services/*"],
+      "@repositories/*": ["src/repositories/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@routes/*": ["src/routes/*"],
+      "@sql/*": ["./prisma/sql/*"],
+      "@config/*": ["src/config/*"],
     }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

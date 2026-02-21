@@ -1,25 +1,31 @@
 import { verifyToken } from '@lib/jwt';
 import { getAccountBasedOnToken } from '@utils/auth';
-import { UnauthorizedError } from '@utils/errors';
+import { UnauthorizedException } from '@utils/errors';
 import { NextFunction, Request, Response } from 'express';
+import { bd } from './bd';
+import { Account } from 'src/db/generated/generated-types';
 
 declare global {
   namespace Express {
     interface Request {
-      user?: any
+      user?: Partial<Account> | null | any;
     }
   }
 }
 
 export async function authenticationMiddleware(req: Request, res: Response, next: NextFunction) {
+  if (await bd(req)) {
+    return next();
+  }
+
   const accessToken = req.cookies?.access_token ?? req.headers['authorization']?.replace('Bearer ', '');
 
-  if (!accessToken) throw new UnauthorizedError('No access token found.');
+  if (!accessToken) throw new UnauthorizedException('No access token found.');
 
   const payload = verifyToken(accessToken);
 
   if (!payload) {
-    throw new UnauthorizedError('Token is not valid.');
+    throw new UnauthorizedException('Token is not valid.');
   }
 
   req.user = await getAccountBasedOnToken(payload);

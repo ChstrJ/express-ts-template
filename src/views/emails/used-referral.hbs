@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .email-header {
+            background-color: #16a34a;
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .email-header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .email-body {
+            padding: 30px 24px;
+            color: #333333;
+        }
+
+        .email-body p {
+            line-height: 1.6;
+            margin: 16px 0;
+        }
+
+        .status-box {
+            background-color: #ecfdf5;
+            border-left: 5px solid #16a34a;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #065f46;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #16a34a;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .email-footer {
+            font-size: 13px;
+            color: #888888;
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        @media only screen and (max-width: 620px) {
+            .email-body {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>Someone Used Your Referral!</h1>
+        </div>
+        <div class="email-body">
+            <p>Hi {{account_name}},</p>
+
+            <p>Good news! Someone just signed up using your referral code <strong>{{referral_code}}</strong>.</p>
+
+            <div class="status-box">
+                You referred: <strong>{{referred_name}}</strong> 🎉
+            </div>
+
+            <p>Thank you for helping our community grow! Keep sharing your referral code to earn more rewards.</p>
+
+            {{!-- <a href="{{referral_dashboard_link}}" class="button">View Your Referrals</a> --}}
+
+            <p>If you have any questions about your referrals or rewards, our support team is always here to assist you.
+            </p>
+        </div>
+        <div class="email-footer">
+            &copy; {{year}} MLM Win · All rights reserved.
+        </div>
+    </div>
+</body>
+
+</html>

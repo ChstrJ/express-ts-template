@@ -1,5 +1,6 @@
 //import { createClient } from "redis";
 import dotenv from 'dotenv';
+import logger from '../common/utils/logger';
 import IORedis from 'ioredis';
 
 dotenv.config();
