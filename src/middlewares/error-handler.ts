@@ -18,12 +18,13 @@ export default function globalErrorHandler(err: Error, req: Request, res: Respon
   })
 
   const response = {
-    error: true,
-    timestamp: Date.now(),
-    message: message || 'An error occurred.',
-    status: statusCode,
-    code: code,
-    stack: !isProduction ? err.stack : undefined
+    success: false,
+    error: {
+      message: message || 'An error occurred.',
+      status: statusCode,
+      code: code,
+      stack: !isProduction ? err.stack : undefined
+    }
   };
 
   res.status(statusCode || 500).json(response);
