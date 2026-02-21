@@ -1,17 +1,16 @@
 import type { Knex } from 'knex';
 import dotenv from 'dotenv';
-import { config } from '@config/index';
 
 dotenv.config();
 
 const knexConfig: Knex.Config = {
   client: "mysql2",
   connection: {
-    host: config.db.mysql.host,
-    port: config.db.mysql.port,
-    user: config.db.mysql.user,
-    password: config.db.mysql.password,
-    database: config.db.mysql.database,
+    host: process.env.MYSQL_HOST,
+    port: Number(process.env.MYSQL_PORT),
+    user: process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
   },
   migrations: {
     directory: "./src/database/migrations",

@@ -8,9 +8,9 @@
     "start": "node ./dist/server.js",
     "dev": "tsx watch src/server.ts",
     "lint": "eslint 'src/**/*.ts'",
-    "db:migrate": "knex --knexfile knex.ts migrate:latest",
-    "db:make-migration": "knex --knexfile knex.ts migrate:make",
-    "db:seed": "knex --knexfile seed:run",
+    "db:migrate": "npx knex migrate:latest",
+    "db:make": "npx knex migrate:make",
+    "db:seed": "npx knex seed:run",
     "pretty": "prettier --write 'src/**/*.ts'",
     "test": "jest"
   },
