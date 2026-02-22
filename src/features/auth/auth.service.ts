@@ -1,12 +1,7 @@
 import { Request } from 'express';
-import { comparePassword } from '@lib/hash';
-import { UnauthorizedException } from '@utils/errors';
-import { signAccessToken, signRefreshToken } from '@lib/jwt';
 import db from 'src/db/db-client';
 import dayjs from 'dayjs';
 import { IdGenerator } from '@utils/id-generator';
-import _ from 'lodash';
-import { Status } from '@common/constants/status';
 
 export const authService = {
   async insertRefreshToken(accountId: string, refreshToken: string) {

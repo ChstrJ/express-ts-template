@@ -1,8 +1,6 @@
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
 import logger from './common/utils/logger';
 import config from './config/config';
 import apiRoutes from '@routes/api';
@@ -11,7 +9,6 @@ import helmet from 'helmet';
 import { NotFoundException } from '@utils/errors';
 import dotenv from 'dotenv';
 import { limiter } from '@middlewares/rate-limiter';
-import { maintenance } from '@middlewares/maintenance';
 
 dotenv.config();
 
@@ -24,9 +21,6 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cors({ origin: config.app.appUrls, credentials: true }));
 app.use(helmet());
-app.use(cookieParser());
-app.use(compression());
-app.use(maintenance);
 
 app.get('/', (req, res) => {
   res.json({ message: 'It works!' });

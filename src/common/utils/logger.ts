@@ -1,12 +1,9 @@
 import pino from 'pino';
 import dotenv from 'dotenv';
-import { sentryLogger } from '@lib/sentry';
 
 dotenv.config();
 
-process.env.TZ = 'Asia/Manila';
-
-let logger: typeof sentryLogger | any;
+let logger: any;
 
 // if (process.env.NODE_ENV !== 'production') {
 //   logger = pino({

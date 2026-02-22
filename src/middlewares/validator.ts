@@ -1,4 +1,3 @@
-import { GeneralMessage } from '@common/constants/message';
 import { formatError } from '@utils/helpers';
 import { NextFunction, Request, Response } from 'express';
 import _ from 'lodash';
@@ -17,7 +16,7 @@ export const validateRequest = (schema: AnyZodObject | any) => {
         return res.status(400).send({
           error: true,
           timestamp: Date.now(),
-          message: GeneralMessage.BAD_REQUEST,
+          message: 'Bad Request',
           errors: formattedErrors
         });
       }
