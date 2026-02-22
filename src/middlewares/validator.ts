@@ -1,5 +1,4 @@
 import { GeneralMessage } from '@common/constants/message';
-import { logger } from '@sentry/node';
 import { formatError } from '@utils/helpers';
 import { NextFunction, Request, Response } from 'express';
 import _ from 'lodash';
@@ -25,7 +24,6 @@ export const validateRequest = (schema: AnyZodObject | any) => {
       req.body = parsedData.data;
       return next();
     } catch (err: any) {
-      logger.error('Zod Error', err);
       return next(err);
     }
   };
