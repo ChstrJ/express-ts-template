@@ -6,7 +6,7 @@
     "build": "tsup src/server.ts --out-dir dist --format esm",
     "clean": "rm -rf ./dist",
     "start": "node ./dist/server.js",
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch --include src src/server.ts",
     "lint": "eslint 'src/**/*.ts'",
     "db:migrate": "npx knex migrate:latest",
     "db:rollback": "npx knex migrate:rollback",
